@@ -1,5 +1,6 @@
 import model
 import csv
+from datetime import datetime
 
 def load_users(session):
     
@@ -12,6 +13,8 @@ def load_users(session):
         # This pulls attributes from the line of raw data & assigns to object
         user_object.id = int(line_list[0])
         user_object.age = int(line_list[1])
+        user_object.gender = line_list[2]
+        user_object.occupation = line_list[3]
         user_object.zipcode = line_list[4]
         session.add(user_object)
 
@@ -23,6 +26,7 @@ def load_movies(session):
     movies_file = open("./seed_data/u.item")
 
     for line in movies_file:
+
         line_list = line.split("|")
         movie_object = model.Movie()
 
@@ -32,8 +36,16 @@ def load_movies(session):
         title = line_list[1]
         title = title.decode("latin-1")
         movie_object.movie_title = title[:-7]
+        
+        # Next line and if/else statement is parsing the release date and converting to DateTime object
+        string_release_date = line_list[2]
 
-        movie_object.release_date = line_list[2]
+        if string_release_date is None or string_release_date is "":
+            pass
+        else: 
+            release_date = datetime.strptime(string_release_date, "%d-%b-%Y")
+            movie_object.release_date = release_date
+
         movie_object.IMDb_url = line_list[4]
         session.add(movie_object)
 
@@ -61,9 +73,9 @@ def load_ratings(session):
 
 def main(session):
     # You'll call each of the load_* functions with the session as an argument
-    # load_users(session)
-    # load_movies(session)
-    load_ratings(session)
+    load_users(session)
+    load_movies(session)
+    # load_ratings(session)
 
 
 

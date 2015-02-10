@@ -16,6 +16,8 @@ class User(Base):
     email = Column(String(64), nullable=True)
     password = Column(String(64), nullable=True)
     age = Column(Integer, nullable=True)
+    gender = Column(String(2))
+    occupation = Column(String(30))
     zipcode = Column(String(15), nullable=True)
 
     def __repr__(self):
@@ -31,7 +33,7 @@ class Movie(Base):
     
     id = Column(Integer, primary_key = True)
     movie_title = Column(String(64), nullable=True)
-    release_date = Column(String(10), nullable=True)
+    release_date = Column(DateTime, nullable=True)
     IMDb_url = Column(String(64), nullable=True)
 
     def __repr__(self):

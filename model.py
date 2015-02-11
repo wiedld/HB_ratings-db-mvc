@@ -31,15 +31,10 @@ class Movie(Base):
 
     __tablename__ = "Movies"
     
-    id = Column(Integer, primary_key = True, ForeignKey("rating.movie_id"))
+    id = Column(Integer, primary_key = True)
     movie_title = Column(String(64), nullable=True)
     release_date = Column(DateTime, nullable=True)
     IMDb_url = Column(String(64), nullable=True)
-    # in the Foreign key above, defn "rating.movie_id".  Now build relationship.  
-    # Relationship joins Movies tables with Rating class, at the id for Movies table.
-    # We *think* rating may be an object representing the virtual table that is created when 
-    # the Rating and Movie tables are joined.
-    rating = relationship("Rating",backref=backref("Movies", order_by=id))
 
     def __repr__(self):
         """Show info about the Python Movie object"""
@@ -54,8 +49,13 @@ class Rating(Base):
 
     id = Column(Integer, primary_key = True)
     user_id = Column(Integer, ForeignKey("Users.id"), nullable=False)
-    movie_id = Column(Integer, ForeignKey("movies.id"), nullable=False)
+    movie_id = Column(Integer, ForeignKey("Movies.id"), nullable=False)
     rating = Column(Integer, nullable=False)
+
+    # Use the variable name on the LEFT if I am asking a Rating object for user attributes.
+    # Use the string passed to backref to ask a user object for its ratings.
+    user = relationship("User", backref=backref("user_ratings", order_by=movie_id))
+    movie = relationship("Movie", backref=backref("movie_ratings", order_by=rating))
 
     def __repr__(self):
         """Show info about the Python Rating object"""

@@ -1,0 +1,13 @@
+<html>
+<h1>These are movies. They are kind of rad? Check the ratings.</h1>
+    {% for movie in movies %}
+        <h2>Title: {{ movie.movie_title }} was released {{ movie.release_date }} and has been rated times. See it on IMDb <a href="{{ movie.IMDb_url }}">here.</a></h2>
+    {% endfor %}
+    <div>
+        <a href="/movie_list/{{ (page_num-1) }}">Go to Page {{(page_num-1)}}</a>
+        </br>
+        <a href="/movie_list/{{ (page_num+1) }}">Go to Page {{(page_num+1)}}</a>
+    </div>
+
+
+</html>

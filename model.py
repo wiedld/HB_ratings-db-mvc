@@ -3,7 +3,7 @@ from sqlalchemy import create_engine
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy.orm import sessionmaker, relationship, backref, scoped_session
 
-ENGINE = create_engine("sqlite:///ratings.db", echo=True)
+ENGINE = create_engine("sqlite:///ratings.db", echo=False)
 session = scoped_session(sessionmaker(bind=ENGINE, autocommit=False, autoflush=False))
 
 Base = declarative_base()

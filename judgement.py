@@ -34,10 +34,18 @@ def show_user_details():
 @app.route("/movie_list/<int:page>")
 def show_movie_list(page):
     """Pulls info from the Movies table and paginates it. May includes the average rating underneath each title it it's not too too hard to implement."""
+
     offset = (page-1) * PER_PAGE
-    movie_list = model.session.query(model.Movie).limit(PER_PAGE).offset(offset)
+    movie_list = model.session.query(model.Movie).limit(PER_PAGE).offset(offset).all()
+    num_of_ratings=[]
+
+    for movie_obj in movie_list:
+        list_of_ratings = movie_obj.movie_ratings
+        num_of_ratings.append(len(list_of_ratings))
+    
+    movie_info = zip(movie_list, num_of_ratings)
     # So each time this function is called, it gets the expected page number from jinja, which increments or decrements the page number based on which link the clicks
-    return render_template("movie_list.html", movies=movie_list, page_num=page)
+    return render_template("movie_list.html", movies=movie_info, page_num=page)
 
 
 

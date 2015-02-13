@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    {# {% if user.id %}
+        <p>user exists!</p>
+    {% endif %} #}
+
+{% if secure==True %}
+    <div>
+    <form action='/user_info/{{pg_id}}'>
+        Id: <input type="text" id="id" name="id" value="{{ user.id }}" required />
+        <br>
+        <br>
+        E-mail: <input type="email" id="email" name="email" value="{{ user.email }}" required />
+        <br>
+        <br>
+        Password: <input type="password" id="password" name="password" value="{{ user.password }}" required />
+        <br>
+        <br>
+        <input type='submit' value='create an account!' id='submit'/>
+        <br>
+        List of movies I have reviewed:  PLACEHOLDER!
+        <br>
+        <br>
+    </form>
+</div>
+{% else %}
+    <div>    
+        <h2>Here are the details for this USER.</h2>
+        <p>ID: {{ user.id }}</p>
+        <p>Age: {{ user.age }}</p>
+        <p>Gender: {{ user.gender }}</p>
+        <p>Occupation: {{ user.occupation }}</p>
+        <p>Zip code: {{ user.zipcode }}</p>
+    </div>
+{% endif %}
+</html>

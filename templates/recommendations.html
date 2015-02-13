@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<h1>These are movies. They are kind of rad? Check the ratings.</h1>
+<h1>These are movies we recommend for you based on creepy algorithms.</h1>
 
     {% for movie,num_of_ratings in movies %} 
         <h2>Title: {{ movie.movie_title }} was released {{ movie.release_date }} and has been rated {{ num_of_ratings }} times. See it on IMDb <a href="{{ movie.IMDb_url }}">here.</a> Review it <a href="/review_movie/{{ movie.id }}">here.</a></h2>

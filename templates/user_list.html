@@ -1,7 +1,8 @@
+<!DOCTYPE html>
 <html>
-<h1>page is rendering outside jinja loop</h1>
+<h1>These are users. They are mostly wierdos.</h1>
     {% for user in users %}
-        <h2>User {{ user.id }}, age  {{ user.age }} has {{ user.user_ratings|length }} ratings</h2>
+        <a href="/user_details/{{ user.id }}"><h2>User {{ user.id }}, age  {{ user.age }} has {{ user.user_ratings|length }} ratings</h2></a>
     {% endfor %}
     <div>
         <a href="/user_list/{{ (page_num-1) }}">Go to Page {{(page_num-1)}}</a>

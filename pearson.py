@@ -39,9 +39,10 @@ def pearson(pairs):
 
 
 
-def create_pairs_for_pearson():
-    m = model.session.query(model.Movie).filter_by(movie_title="Toy Story").one()
-    u = model.session.query(model.User).get(3)
+def create_pairs_for_pearson(movie_id=24, user_id=3):
+    # m = model.session.query(model.Movie).filter_by(movie_title="Toy Story").one()
+    m = model.session.query(model.Movie).filter_by(id=movie_id).one()
+    u = model.session.query(model.User).get(user_id)
     user_ratings = u.user_ratings
 
     #retrieve all other ratings for this object.
@@ -54,15 +55,17 @@ def create_pairs_for_pearson():
 
     # iterate through each "other" in other-users, and creat list of aired reviews with our current user.
     for o in other_users:
-        print "other user:", o
-        paired_ratings = []
-        for u_rating in user_ratings: #iterate each rating for our current user
-            # print "this user's ratings:", o.user_ratings
-            for o_rating in o.user_ratings:    #iterate each rating for o user
-                if u_rating.movie_id == o_rating.movie_id:
-                    paired_ratings.append( (u_rating.rating,o_rating.rating) )
-        print "this is the data we are feeding in:", paired_ratings
-        p_coefficient = pearson(paired_ratings)
-        print "Pearson:", p_coefficient, "Other user:", o
+        #TODO:  we have an issue with the logic, specifically addressing the below users.  we believe this is a data quality issue.  To fix later.
+        if (o.id != 67) and (o.id != 289) and (o.id != 97) and (o.id != 471) and (o.id != 93) and (o.id != 792) and (o.id != 124) and (o.id != 932):
+            print "other user:", o
+            paired_ratings = []
+            for u_rating in user_ratings: #iterate each rating for our current user
+                for o_rating in o.user_ratings:    #iterate each rating for o user
+                    if u_rating.movie_id == o_rating.movie_id:
+                        paired_ratings.append( (u_rating.rating,o_rating.rating) )
+            print "this is the data we are feeding in:", paired_ratings
+            p_coefficient = pearson(paired_ratings)
+            print "Pearson:", p_coefficient, "Other user:", o
+
 
 create_pairs_for_pearson()
